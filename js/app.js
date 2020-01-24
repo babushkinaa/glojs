@@ -1,13 +1,39 @@
-let money = 10000;
-let income = "Профи.ру"; 
-let addExpenses = "Интернет, Комунальные платежи, Школа, Сад, Транспорт"; 
+// 1) Следующим переменным присвоить значения 
+//    - money - любое число “Доход за месяц”,
+//    - income - строка с дополнительными доходом (например: фриланс), 
+//    - addExpenses - строка с перечислением дополнительных расходов через запятую (например: интернет, такси, коммуналка), 
+//    - deposit - любое булево значение,
+//    - mission - любое число (Какую сумму хотите накопить),
+//    - period - число от 1 до 12 (месяцев)
+// 2) Используя методы и свойства:
+//    - Вывести в консоль тип данных значений переменных money, income, deposit;
+//    - Вывести в консоль длину строки addExpenses
+//    - Вывести в консоль “Период равен (period) месяцев” и “Цель заработать (mission) рублей/долларов/гривен/юани”
+//    - Привести строку addExpenses к нижнему регистру и разбить строку на массив, вывести массив в консоль
+//    - Объявить переменную budgetDay и присвоить дневной бюджет (доход за месяц / 30)
+//    - Вывести в консоль budgetDay
+// 3) Проверить, чтобы все работало и не было ошибок в консоли
+// 4) Добавить папку или ветку со вторым уроком в свой репозиторий на GitHub
+
+let money = 10000; // доход за месяц
+let income = "Профи.ру"; // дополнительный источник дохода
+let addExpenses = "Интернет, Комунальные платежи, Школа, Сад, Транспорт"; //статьи затрат 
 let deposit = true; 
-let mission = 1000000; 
-let period = 12;
+let mission = 1000000; // хочу миллион
+let period = 12; // хочу миллион за какой период
+let budgetDay = money/30; // что пока имеем в день
 
 
-console.log('money: ', typeof(money));
-console.log('income: ', typeof(income));
-console.log('deposit: ', typeof(deposit));
+console.log('money: ', typeof money);
+console.log('income: ', typeof income);
+console.log('deposit: ', typeof deposit);
 
 console.log('Длинна строки addExpenses: ', addExpenses.length);
+console.log('Период равен '+ period +' месяцев ');
+console.log('Цель заработать ' + mission + ' рублей');
+console.log(addExpenses.toLowerCase());
+console.log('Дневной бюджет: ', budgetDay);
+console.log('Доп затраты в массив: ', addExpenses.split(', '));
+
+
+
