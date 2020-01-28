@@ -42,26 +42,19 @@ accumulatedMonth = getAccumulatedMonth(money,getExpensesMonth(amount1,amount2));
 
 //+getExpensesMonth возвращаем сумму всех обязательных расходов в месяц
 function getExpensesMonth(expenditure, expenditure2) {
-    let tmpExpedeture = +expenditure; // первый обязательный расход
-    let tmpExpedeture2 = +expenditure2; // второй обязательный расход
-    return 30*(tmpExpedeture + tmpExpedeture2);    
+        return +expenditure + +expenditure2;    
 }
 //getAccumulatedMonth возвращаем доход за месяц доход - расход
 function getAccumulatedMonth(income, expenditure) {
-    let tmpIncome = +income; // доход за месяц
-    let tmpExpedeture = +expenditure; // расходы за месяц
-    return tmpIncome - tmpExpedeture;
+        return +income - expenditure;
 }
 //getTargetMonth подсчитываем за какой период будет достигнута цель
 function getTargetMonth(moneyMission, incomeMonth) {
-    let tmpMoneyMonth = +moneyMission; // сколько хотим заработать
-    let tmpIncomeMonth = +incomeMonth; // какой доход в месяц
-    return Math.ceil(tmpMoneyMonth/tmpIncomeMonth);    
+       return Math.ceil(+moneyMission/incomeMonth);    
 }
 //fbudgetDay посчитаем дневной бюджет
 function fbudgetDay(accumulatedMonth) {
-    let tmpMoney = +money; // доход в месяц
-    return Math.floor(tmpMoney/30);    
+    return Math.floor(+accumulatedMonth/30);    
 }
 //showTypeOf возвращаем тип переменной
 function showTypeOf(params) {
@@ -69,45 +62,47 @@ function showTypeOf(params) {
 }
 
 //getStatusIncome статус нашего дохода
-function getStatusIncome() {
-    console.log('вызов функции getStatusIncome');    
+function getStatusIncome(getBudget) {
+    if ( getBudget > 1200 ) {
+        return 'У вас высокий уровень дохода';
+    } else if (getBudget < 1200 && getBudget >600) {
+        return 'У вас средний уровень дохода';
+    }else if (getBudget < 600 && getBudget > 0) {
+        return 'К сожалению у вас уровень дохода ниже среднего';
+    }else if (getBudget < 0) {
+        return 'Что то пошло не так !!!';
+    }else if (getBudget === 0 || getBudget === 600 || getBudget === 1200) {
+        switch (budgetDay){
+            case (0):{
+                return 'Может нужно идти на работу?';
+                break;
+            }
+            case(600):{
+                return 'У вас средний уровень дохода';
+                break;
+            }
+            case(1200):{
+                return 'У вас высокий уровень дохода';
+                break;
+            }
+        }
+    }; 
+
 }
 
 budgetDay = fbudgetDay(accumulatedMonth);
 
-if ( budgetDay > 1200 ) {
-    messageUser = 'У вас высокий уровень дохода';
-} else if (budgetDay < 1200 && budgetDay >600) {
-    messageUser = 'У вас средний уровень дохода';
-}else if (budgetDay < 600 && budgetDay > 0) {
-    messageUser = 'К сожалению у вас уровень дохода ниже среднего';
-}else if (budgetDay < 0) {
-    messageUser = 'Что то пошло не так !!!';
-}else if (budgetDay === 0 || budgetDay === 600 || budgetDay === 1200) {
-    switch (budgetDay){
-        case (0):{
-            messageUser = 'Может нужно идти на работу?';
-            break;
-        }
-        case(600):{
-            messageUser = 'У вас средний уровень дохода';
-            break;
-        }
-        case(1200):{
-            messageUser = 'У вас высокий уровень дохода';
-            break;
-        }
-    }
-}; 
+
 
 console.log('money: ', showTypeOf(money));
 console.log('income: ', showTypeOf(income));
 console.log('deposit: ', showTypeOf(deposit));
-console.log('Расходы за месяц: ', getExpensesMonth(amount1,amount2));
+console.log('Расходы за месяц: ', 30*(getExpensesMonth(amount1,amount2)));
 console.log('Доп затраты в массив: ', addExpenses.split(', '));
 console.log(mission + ' с твоим доходом можно заработать за ' + getTargetMonth(money,getAccumulatedMonth(money,getExpensesMonth(amount1,amount2))) + ' месяцев ');
 console.log('Дневной бюджет: ', budgetDay);
-getStatusIncome();
+// getStatusIncome();
+console.log('Уровень вашего дохода: ', getStatusIncome(budgetDay));
 
 // console.log('Длинна строки addExpenses: ', addExpenses.length);
 // console.log('Период равен '+ period +' месяцев ');
