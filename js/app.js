@@ -104,7 +104,8 @@ function getStatusIncome(getBudget) {
 console.log('money: ', showTypeOf(money));
 console.log('income: ', showTypeOf(income));
 console.log('deposit: ', showTypeOf(deposit));
-console.log('Расходы за месяц: ', 30 * expensesMonth);
+console.log('Расходы за месяц: ', expensesMonth);
+// console.log('Расходы за месяц: ', 30 * expensesMonth);
 console.log('Доп затраты в массив: ', addExpenses.split(', '));
 getTargetMonth();
 console.log('Дневной бюджет: ', budgetDay());
