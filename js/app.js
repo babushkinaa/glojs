@@ -185,10 +185,10 @@ let money,
 
 }
 
-appData.getAddExpences();
-appData.showAddExpenses();
+// appData.getAddExpences();
+// appData.showAddExpenses();
 
-// appData.asking();     // получаем обязательные расходы за месяц expenses
+appData.asking();     // получаем обязательные расходы за месяц expenses
 
 let start = function () {
         do {
@@ -206,7 +206,7 @@ let start = function () {
     appData.getTargetMonth();
     console.log( appData.getStatusIncome());
 }
-// start();
+start();
 
 
 
