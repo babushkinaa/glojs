@@ -239,27 +239,27 @@ let start = function () {
 }
 start();
 
-console.log( calculateButton 
-            ,btnPlusIncomeAdd 
-            ,btnPlusExpensesAdd 
-            ,depositCheckmark 
-            ,additionalIncome 
-            ,resultTotalBudgetMonthValue 
-            ,resultTotalBudgetDayValue 
-            ,resultTotalExpensesMonthValue  
-            ,resultTotalAdditionalIncomeValue 
-            ,resultTotalAdditionalExpensesValue 
-            ,resultTotalIncomePeriodValue  
-            ,resultTotalTargetMonthValue 
-            ,inputSalaryAmount 
-            ,inputIncomeTitle 
-            ,inputIncomeAmount 
-            ,inputAdditionalIncomeItem 
-            ,inputExpensesTitle 
-            ,inputExpensesAmount 
-            ,inputAdditionalExpensesItem 
-            ,inputTargetAmount 
-            ,inputPeriodSelect );
+// console.log( calculateButton 
+//             ,btnPlusIncomeAdd 
+//             ,btnPlusExpensesAdd 
+//             ,depositCheckmark 
+//             ,additionalIncome 
+//             ,resultTotalBudgetMonthValue 
+//             ,resultTotalBudgetDayValue 
+//             ,resultTotalExpensesMonthValue  
+//             ,resultTotalAdditionalIncomeValue 
+//             ,resultTotalAdditionalExpensesValue 
+//             ,resultTotalIncomePeriodValue  
+//             ,resultTotalTargetMonthValue 
+//             ,inputSalaryAmount 
+//             ,inputIncomeTitle 
+//             ,inputIncomeAmount 
+//             ,inputAdditionalIncomeItem 
+//             ,inputExpensesTitle 
+//             ,inputExpensesAmount 
+//             ,inputAdditionalExpensesItem 
+//             ,inputTargetAmount 
+//             ,inputPeriodSelect );
     
 
 
