@@ -5,7 +5,39 @@
 let isNumber = function (number) {
     return !isNaN(parseFloat(number)) && isFinite(parseFloat(number));
 }
-let money,
+let //переменные страницы
+
+    calculateButton = document.getElementById('start'), // кнока рассчитать
+    btnPlusIncomeAdd = document.getElementsByClassName('income_add'), // кнопка дополнительный доход "+"
+    btnPlusExpensesAdd = document.getElementsByClassName('expenses_add'), // возможные расходы кнопка "+"
+    depositCheckmark = document.querySelector('.deposit-checkmark'), // чек-бокс депозит
+    additionalIncome = document.querySelectorAll('.additional_income'), // возможные доходы
+
+    //value
+    resultTotalBudgetMonthValue = document.querySelector('.budget_month-value'), // доход за месяц
+    resultTotalBudgetDayValue = document.querySelector('.budget_day-value'), // дневной доход
+    resultTotalExpensesMonthValue = document.querySelector('.expenses_month-value'), // расход за месяц
+    resultTotalAdditionalIncomeValue = document.querySelector('.additional_income-value'), // возможные доходы
+    resultTotalAdditionalExpensesValue = document.querySelector('.additional_expenses-value'), // возможные расходы
+    resultTotalIncomePeriodValue = document.querySelector('.income_period-value'), // накопления за период
+    resultTotalTargetMonthValue = document.querySelector('.target_month-value'), // срок достижения
+
+    // input
+    inputSalaryAmount = document.querySelector('.salary-amount'), // месячный доход
+    inputIncomeTitle = document.querySelector('.income-title'), //дополнительный доход наименование
+    inputIncomeAmount = document.querySelector('.income-amount'), // дополнительный доход сумма
+    inputAdditionalIncomeItem = document.querySelectorAll('.additional_income-title'), //возможный доход коллекция
+    inputExpensesTitle = document.querySelector('.expenses-title'), // обязательные расходы наименование
+    inputExpensesAmount = document.querySelector('.expenses-amount'), // обязательные расходы сумма
+    inputAdditionalExpensesItem = document.querySelector('.additional_expenses-item'), // возможные рассходы
+    inputTargetAmount = document.querySelector('.target-amount'), // цель накопления
+    
+    // бегунок
+    inputPeriodSelect = document.querySelector('.period-select'), // период рассчета ползунок
+    
+    // Переменные скрипта
+
+    money,
     appData = {
     income: {},
     budget : 0,
@@ -71,7 +103,6 @@ let money,
             } while (!isNumber(moneyDeposit));
             appData.moneyDeposit = +moneyDeposit;
         }
-        console.log(appData);
     },
 
     calcSavedMoney : function(){
@@ -208,6 +239,28 @@ let start = function () {
 }
 start();
 
+console.log( calculateButton 
+            ,btnPlusIncomeAdd 
+            ,btnPlusExpensesAdd 
+            ,depositCheckmark 
+            ,additionalIncome 
+            ,resultTotalBudgetMonthValue 
+            ,resultTotalBudgetDayValue 
+            ,resultTotalExpensesMonthValue  
+            ,resultTotalAdditionalIncomeValue 
+            ,resultTotalAdditionalExpensesValue 
+            ,resultTotalIncomePeriodValue  
+            ,resultTotalTargetMonthValue 
+            ,inputSalaryAmount 
+            ,inputIncomeTitle 
+            ,inputIncomeAmount 
+            ,inputAdditionalIncomeItem 
+            ,inputExpensesTitle 
+            ,inputExpensesAmount 
+            ,inputAdditionalExpensesItem 
+            ,inputTargetAmount 
+            ,inputPeriodSelect );
+    
 
 
 
