@@ -26,12 +26,14 @@ let //переменные страницы
     resultTotalAdditionalExpensesValue = document.querySelector('.additional_expenses-value'), // возможные расходы
     resultTotalIncomePeriodValue = document.querySelector('.income_period-value'), // накопления за период
     resultTotalTargetMonthValue = document.querySelector('.target_month-value'), // срок достижения
+    periodAmount = document.querySelector('.period-amount');
 
     // input
     inputSalaryAmount = document.querySelector('.salary-amount'), // месячный доход
     inputIncomeTitle = document.querySelector('.income-title'), //дополнительный доход наименование
     inputIncomeAmount = document.querySelectorAll('.income-items'), // дополнительный доход сумма
-    inputAdditionalIncomeItem = document.querySelectorAll('.additional_income-title'), //возможный доход коллекция
+    inputAdditionalIncome = document.querySelectorAll('.additional_income'), //возможный доход коллекция
+    inputAdditionalIncomeItem = document.querySelectorAll('.additional_income-item'), //возможный доход коллекция
     inputExpensesAmount = document.querySelectorAll('.expenses-items'), // обязательные расходы сумма
     inputAdditionalExpensesItem = document.querySelector('.additional_expenses-item'), // возможные рассходы
     inputTargetAmount = document.querySelector('.target-amount'), // цель накопления
@@ -63,16 +65,16 @@ let //переменные страницы
         appData.getAddIncome();
         appData.getAddExpences();
         appData.showAddExpences();
-
+        appData.getAddIncomeManu();
     
         appData.getExpensesMonth();
-        appData.questDeposit();
-        appData.getInfoDeposit();
+        // appData.questDeposit();
+        // appData.getInfoDeposit();
         appData.getBudget();
         appData.getTargetMonth();
-        console.log( appData.getStatusIncome());
     
-    
+        appData.calcSavedMoney();
+
         appData.showResults();
     },    
 // присваиваем значение на странице
@@ -81,6 +83,8 @@ let //переменные страницы
         resultTotalBudgetDayValue.value = appData.budgetDay;
         resultTotalExpensesMonthValue.value = appData.expensesMonth;
         resultTotalTargetMonthValue.value = appData.getTargetMonth();
+        resultTotalAdditionalIncomeValue.value = appData.addIncome.join(', ');
+        inputPeriodSelect.addEventListener('input',appData.calcSavedMoney);
     },
     
 // Расходы
@@ -152,6 +156,17 @@ let //переменные страницы
             }
         });
     },
+    // Возможные доходы
+    getAddIncomeManu : function(){
+        console.dir(inputAdditionalIncome);
+        inputAdditionalIncomeItem.forEach(function(item){
+            let itemIncome = item.value.trim();
+            if (itemIncome !== '') {
+                appData.addIncome.push(itemIncome);
+            }
+        });
+
+    },
     // Значение под бегунком
     setValuePeriod : function(){
         let numPeriod = document.querySelector('.period-amount');
@@ -182,7 +197,11 @@ let //переменные страницы
         }
     },
     calcSavedMoney : function(){
-        return appData.budgetMonth * appData.period;
+    //    return appData.budgetMonth * inputPeriodSelect.value;
+       resultTotalIncomePeriodValue.value = appData.budgetMonth * inputPeriodSelect.value;
+       resultTotalTargetMonthValue.value = appData.getTargetMonth();
+
+        // appData.getTargetMonth();
     },
     //getAccumulatedMonth возвращаем доход за месяц доход - расход budgetMonth, budgetDay
     getBudget : function () { 
@@ -197,7 +216,7 @@ let //переменные страницы
         // }  else {
         //     console.log('Цель в ' + appData.mission + ' с твоим доходом будет достигнута за ' + (Math.ceil(appData.mission/appData.budgetMonth)) + ' месяцев ');
         // } 
-        return (Math.ceil(appData.mission/appData.budgetMonth));    
+        return (Math.ceil(inputTargetAmount.value/appData.budgetMonth));    
     },
     // определяем уровень дохода
     getStatusIncome : function(){
@@ -224,9 +243,9 @@ let //переменные страницы
     }
 
 }
-
-
-inputSalaryAmount.addEventListener('input', appData.enableBtn)
+// appData.getAddIncomeManu();
+periodAmount.addEventListener('change',appData.showResults);
+inputSalaryAmount.addEventListener('input', appData.enableBtn);
 inputPeriodSelect.addEventListener('input',appData.setValuePeriod);
 calculateButton.addEventListener('click',appData.start);
 btnPlusExpensesAdd.addEventListener('click',appData.addExpensesBlock);
