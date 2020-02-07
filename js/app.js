@@ -60,7 +60,7 @@ let //переменные страницы
 
     start : function () {
        
-        appData.budget = inputSalaryAmount.value;    
+        appData.budget = +inputSalaryAmount.value;    
         appData.getExpences();
         appData.getAddIncome();
         appData.getAddExpences();
@@ -90,6 +90,8 @@ let //переменные страницы
 // Расходы
     addExpensesBlock : function(){ // обязательные расходы добавление строчек
         let item = inputExpensesAmount[0].cloneNode(true);
+        // item.textContent = '';
+        // inputExpensesAmount[0].parentNode.appendChild(item);
         inputExpensesAmount[0].parentNode.insertBefore(item,btnPlusExpensesAdd);
         inputExpensesAmount = document.querySelectorAll('.expenses-items');
         if (inputExpensesAmount.length === 3) {
@@ -106,6 +108,8 @@ let //переменные страницы
                     expensesMonth += element;
                 }
             }
+
+            
     
             return appData.expensesMonth = expensesMonth;
     },
@@ -137,24 +141,28 @@ let //переменные страницы
     },
 // Доходы
     addIncomeBlock : function(){ // дополнительный доход добавление строчек
-        let item = inputIncomeAmount[0].cloneNode(true);
+        let item = inputIncomeAmount[0].cloneNode(true);     
         inputIncomeAmount[0].parentNode.insertBefore(item,btnPlusIncomeAdd);
         inputIncomeAmount = document.querySelectorAll('.income-items');
         if (inputIncomeAmount.length === 3) {
             btnPlusIncomeAdd.style.display = 'none';
         }
+        
     },
     // Дополнительные доходы с input
     getAddIncome : function(){
         // console.log(inputIncomeAmount[0]);
+        let addIncome = 0;
         inputIncomeAmount.forEach(function(item){
             let itemIncome = item.querySelector('.income-title').value;
             // console.log('item.querySelector.value: ', item.querySelector('.income-items').value);
-            let cashAmount = item.querySelector('.income-amount').value;
+            let cashAmount = +item.querySelector('.income-amount').value;
             if (itemIncome !== '' && cashAmount !== '') {
                 appData.income[itemIncome] = cashAmount;
+                addIncome += cashAmount;
             }
         });
+        appData.budget = appData.budget + addIncome;
     },
     // Возможные доходы
     getAddIncomeManu : function(){
