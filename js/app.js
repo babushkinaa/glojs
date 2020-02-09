@@ -139,18 +139,18 @@ let //переменные страницы
     },
     // Expenses обязательные с input расходы ----
     getExpences : function(){
-        inputExpensesAmount.forEach(function(item){
+        inputExpensesAmount.forEach((item) =>{
             let itemExpenses = item.querySelector('.expenses-title').value;
             let cashAmount = item.querySelector('.expenses-amount').value;
             if (itemExpenses !== '' && cashAmount !== '') {
-                appData.expenses[itemExpenses] = cashAmount;
+                this.expenses[itemExpenses] = cashAmount;
             }
         });
     },
     //возможные расходы ----
     getAddExpences : function(){
         let addExp = inputAdditionalExpensesItem.value.split(',');
-            addExp.forEach(function(item){
+            addExp.forEach((item) => {
                 item = item.trim();
                 if(item !== ''){
                     console.log('getAddExpencess', this);
@@ -178,11 +178,11 @@ let //переменные страницы
     // Дополнительные доходы с input
     getAddIncome : function(){
         let addIncome = 0;
-        inputIncomeAmount.forEach(function(item){
+        inputIncomeAmount.forEach((item)=>{
             let itemIncome = item.querySelector('.income-title').value;
             let cashAmount = +item.querySelector('.income-amount').value;
             if (itemIncome !== '' && cashAmount !== '') {
-                appData.income[itemIncome] = cashAmount;
+                this.income[itemIncome] = cashAmount;
                 addIncome += cashAmount;
             }
         });
@@ -192,10 +192,10 @@ let //переменные страницы
     // Возможные доходы -----
     getAddIncomeManu : function(){
         // console.dir(inputAdditionalIncome);
-        inputAdditionalIncomeItem.forEach(function(item){
+        inputAdditionalIncomeItem.forEach((item) =>{
             let itemIncome = item.value.trim();
             if (itemIncome !== '') {
-                appData.addIncome.push(itemIncome); 
+                this.addIncome.push(itemIncome); 
             }
         });
 
@@ -211,7 +211,7 @@ let //переменные страницы
     questDeposit : function(){
         // let quest = prompt('Есть ли у вас счет в банке? "да" "нет"', 'Да').toLocaleLowerCase();
         // return appData.deposit = quest === 'да' ? true : false;
-        return appData.deposit = false;
+        this.deposit = false;
     },
     // Если есть депозит спросим какой процент и какая сумма
     getInfoDeposit : function(){
@@ -226,14 +226,14 @@ let //переменные страницы
             do {
                 moneyDeposit = prompt('Какая сумма?', 10000);
             } while (!isNumber(moneyDeposit));
-            appData.moneyDeposit = +moneyDeposit;
+            this.moneyDeposit = +moneyDeposit;
         }
     },
     // сколько накопим ----
     calcSavedMoney : function(){
     //    return appData.budgetMonth * inputPeriodSelect.value;
-       resultTotalIncomePeriodValue.value = appData.budgetMonth * inputPeriodSelect.value;
-       resultTotalTargetMonthValue.value = appData.getTargetMonth();
+       resultTotalIncomePeriodValue.value = this.budgetMonth * inputPeriodSelect.value;
+       resultTotalTargetMonthValue.value = this.getTargetMonth();
 
         // appData.getTargetMonth();
     },
@@ -299,7 +299,7 @@ let //переменные страницы
 
         inputAdditionalExpensesItem.disabled = true;  // возможные рассходы
         inputTargetAmount.disabled = true;  // цель накопления
-        document.querySelector('.deposit-check').disabled = true;
+        document.querySelector('#deposit-check').disabled = true;
         document.querySelector('.deposit-checkmark').disabled = true;
         btnPlusIncomeAdd.disabled = true;  // кнопка дополнительный доход "+"
         btnPlusExpensesAdd.disabled = true;// возможные расходы кнопка "+"
@@ -316,6 +316,7 @@ let //переменные страницы
     }
 
 }
+
 // appData.getAddIncomeManu();
 // почему нужно всем делать bind? 
 periodAmount.addEventListener('change',appData.showResults.bind(appData));
