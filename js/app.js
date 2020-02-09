@@ -2,6 +2,7 @@
 // Блокировка кнопки рассчитать
 document.addEventListener("DOMContentLoaded", function(){
     calculateButton.disabled = true;
+    
 
 });
 
@@ -11,6 +12,10 @@ document.addEventListener("DOMContentLoaded", function(){
 let isNumber = function (number) {
     return !isNaN(parseFloat(number)) && isFinite(parseFloat(number));
 }
+const rusLower = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя',
+      rusUpper = rusLower.toUpperCase(),
+      rus = rusLower + rusUpper;
+
 let //переменные страницы
 
     calculateButton = document.querySelector('#start'), // кнока рассчитать
@@ -114,8 +119,12 @@ let //переменные страницы
 // Расходы
     addExpensesBlock : function(){ // обязательные расходы добавление строчек
         let item = inputExpensesAmount[0].cloneNode(true);
-        let val = item.querySelector('.expenses-title').value = '';
-        let val1 = item.querySelector('.expenses-amount').value = '';
+        let val = item.querySelector('.expenses-title');
+        let val1 = item.querySelector('.expenses-amount');
+        val.value ='';
+        val1.value='';
+        val.addEventListener('keypress',this.checkSymbol);
+        val1.addEventListener('keypress',this.checkSymbol);
         inputExpensesAmount[0].parentNode.insertBefore(item,btnPlusExpensesAdd);
         inputExpensesAmount = document.querySelectorAll('.expenses-items');
         if (inputExpensesAmount.length === 3) {
@@ -166,8 +175,12 @@ let //переменные страницы
 // Доходы
     addIncomeBlock : function(){ // дополнительный доход добавление строчек
         let item = inputIncomeAmount[0].cloneNode(true);   
-        let val = item.querySelector('.income-title').value = '';
-        let val1 = item.querySelector('.income-amount').value = '';  
+        let val = item.querySelector('.income-title');
+        let val1 = item.querySelector('.income-amount');
+        val.value = '';
+        val1.value = '';  
+        val.addEventListener('keypress',this.checkSymbol);
+        val1.addEventListener('keypress',this.checkSymbol);
         inputIncomeAmount[0].parentNode.insertBefore(item,btnPlusIncomeAdd);
         inputIncomeAmount = document.querySelectorAll('.income-items');
         if (inputIncomeAmount.length === 3) {
@@ -270,14 +283,38 @@ let //переменные страницы
        calculateButton.disabled = false;
     },
     checkSymbol : function(event){
-        const getChar = (event) => String.fromCharCode(event.keyCode || event.charCode);
-        const char = getChar(event)
-            if (rus.includes(char)) {
-                console.log('ru');
-            } else {
-                console.log('хз');
+        // console.dir(event.target.labels[0].style.display='block');
+        // console.dir(event.target);
+        let str = '';
+        if (event.target.placeholder.toLowerCase() === 'наименование') {
+            event.target.labels[0].style.display='none';
+            const getChar = (event) => String.fromCharCode(event.keyCode || event.charCode);
+            const char = getChar(event)
+                if (rus.includes(char)) {
+                    console.log('ru');
+                    str +=event.target.value;
+                    event.target.value = str;
+                } else {
+                        event.target.labels[0].style.display='block';
+                        event.target.value = ' ';   
+                }
+        
+        }else if (event.target.placeholder.toLowerCase() === 'сумма'){
+            event.target.labels[0].style.display='none';
+
+            const getChar = (event) => String.fromCharCode(event.keyCode || event.charCode);
+            const char = getChar(event)
+            if (isNumber(char)) {
+                str +=event.target.value;
+                event.target.value = str;
+
+            }else{
+                event.target.labels[0].style.display='block';
+
+                event.target.value = ' ';   
             }
-        console.log('ввод');
+        }
+        
     },
     inputDisable : function(){
     // input
@@ -313,7 +350,7 @@ let //переменные страницы
         cancelButton.addEventListener('click',this.resetAll);
         cancelButton.style.display = 'block';
 
-    }
+    },
 
 }
 
@@ -327,9 +364,17 @@ inputPeriodSelect.addEventListener('input',appData.setValuePeriod.bind(appData))
 calculateButton.addEventListener('click',appData.start.bind(appData));//работает!!!
 btnPlusExpensesAdd.addEventListener('click',appData.addExpensesBlock.bind(appData));
 btnPlusIncomeAdd.addEventListener('click',appData.addIncomeBlock.bind(appData));
-inputIncomeTitle.addEventListener('keypress',appData.checkSymbol.bind(appData));
-
-
+// собятия на ввод - пока так
+inputExpensesAmount[0].querySelector('.expenses-title').addEventListener('keypress',appData.checkSymbol);
+inputExpensesAmount[0].querySelector('.expenses-amount').addEventListener('keypress',appData.checkSymbol);
+inputIncomeAmount[0].querySelector('.income-title').addEventListener('keypress',appData.checkSymbol);  
+inputIncomeAmount[0].querySelector('.income-amount').addEventListener('keypress',appData.checkSymbol);  
+inputAdditionalIncomeItem[0].addEventListener('keypress',appData.checkSymbol);  
+inputAdditionalIncomeItem[1].addEventListener('keypress',appData.checkSymbol);  
+inputAdditionalExpensesItem.addEventListener('keypress',appData.checkSymbol);  
+inputTargetAmount.addEventListener('keypress',appData.checkSymbol);  
+inputSalaryAmount.addEventListener('keypress',appData.checkSymbol);  
+        
 
 
 
