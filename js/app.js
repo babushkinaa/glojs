@@ -170,8 +170,8 @@ const //переменные страницы
             // Expenses обязательные с input расходы 
             getExpences(){
                 inputExpensesAmount.forEach((item) =>{
-                    let itemExpenses = item.querySelector('.expenses-title').value;
-                    let cashAmount = item.querySelector('.expenses-amount').value;
+                    const itemExpenses = item.querySelector('.expenses-title').value;
+                    const cashAmount = item.querySelector('.expenses-amount').value;
                     if (itemExpenses !== '' && cashAmount !== '') {
                         this.expenses[itemExpenses] = cashAmount;
                     }
@@ -179,7 +179,7 @@ const //переменные страницы
             };
             //возможные расходы
             getAddExpences(){
-                let addExp = inputAdditionalExpensesItem.value.split(',');
+                const addExp = inputAdditionalExpensesItem.value.split(',');
                     addExp.forEach((item) => {
                         item = item.trim();
                         if(item !== ''){
@@ -195,9 +195,9 @@ const //переменные страницы
             };
             // Доходы дополнительный доход добавление строчек
             addIncomeBlock(){ // 
-                let item = inputIncomeAmount[0].cloneNode(true);   
-                let val = item.querySelector('.income-title');
-                let val1 = item.querySelector('.income-amount');
+                const item = inputIncomeAmount[0].cloneNode(true);   
+                const val = item.querySelector('.income-title');
+                const val1 = item.querySelector('.income-amount');
                 val.value = '';
                 val1.value = '';  
                 val.addEventListener('keypress',this.checkSymbol);
@@ -213,8 +213,8 @@ const //переменные страницы
             getAddIncome(){
                 let addIncome = 0;
                 inputIncomeAmount.forEach((item)=>{
-                    let itemIncome = item.querySelector('.income-title').value;
-                    let cashAmount = +item.querySelector('.income-amount').value;
+                    const itemIncome = item.querySelector('.income-title').value;
+                    const cashAmount = +item.querySelector('.income-amount').value;
                     if (itemIncome !== '' && cashAmount !== '') {
                         this.income[itemIncome] = cashAmount;
                         addIncome += cashAmount;
@@ -227,7 +227,7 @@ const //переменные страницы
             getAddIncomeManu(){
                 // console.dir(inputAdditionalIncome);
                 inputAdditionalIncomeItem.forEach((item) =>{
-                    let itemIncome = item.value.trim();
+                    const itemIncome = item.value.trim();
                     if (itemIncome !== '') {
                         this.addIncome.push(itemIncome); 
                     }
@@ -235,8 +235,8 @@ const //переменные страницы
             };
             // Значение под бегунком
             setValuePeriod(){
-                let numPeriod = document.querySelector('.period-amount');
-                let pSelect = document.querySelector('.period-select')
+                const numPeriod = document.querySelector('.period-amount');
+                const pSelect = document.querySelector('.period-select')
                 numPeriod.value = pSelect.value;
                 numPeriod.textContent = pSelect.value;
             };
@@ -250,8 +250,8 @@ const //переменные страницы
             };
             //getAccumulatedMonth возвращаем доход за месяц доход - расход budgetMonth, budgetDay
             getBudget() { 
-                let budgetMonth =  this.budget - this.expensesMonth;
-                let budgetDay = Math.floor(budgetMonth/30);
+                const budgetMonth =  this.budget - this.expensesMonth;
+                const budgetDay = Math.floor(budgetMonth/30);
                 const monthDeposit = this.moneyDeposit * (this.persentDeposit / 100); 
                 // const monthDeposit = this.moneyDeposit * (this.persentDeposit / 100); 
                 this.budgetMonth = budgetMonth + monthDeposit;
@@ -265,7 +265,7 @@ const //переменные страницы
             };
             // определяем уровень дохода
             getStatusIncome(){
-                let budgetDay = this.budgetDay;
+                const budgetDay = this.budgetDay;
                 if ( budgetDay >= 1200 ) {
                     return 'У вас высокий уровень дохода';
                 } else if (budgetDay < 1200 && budgetDay >600) {
@@ -326,15 +326,15 @@ const //переменные страницы
                     inputSalaryAmount.disabled = true;  // месячный доход
                 
                     inputIncomeAmount.forEach(function(item){
-                        let itemIncome = item.querySelector('.income-title').disabled = true; //дополнительный доход наименование
-                        let cashAmount = item.querySelector('.income-amount').disabled = true;// дополнительный доход сумма
+                        const itemIncome = item.querySelector('.income-title').disabled = true; //дополнительный доход наименование
+                        const cashAmount = item.querySelector('.income-amount').disabled = true;// дополнительный доход сумма
                     });
                     inputAdditionalIncomeItem.forEach(function(item){
-                        let itemIncome = item.disabled = true;
+                        const itemIncome = item.disabled = true;
                     });
                     inputExpensesAmount.forEach(function(item){
-                        let itemExpenses = item.querySelector('.expenses-title').disabled = true;
-                        let cashAmount = item.querySelector('.expenses-amount').disabled = true;
+                        const itemExpenses = item.querySelector('.expenses-title').disabled = true;
+                        const cashAmount = item.querySelector('.expenses-amount').disabled = true;
                         
                     });
                 
@@ -372,24 +372,22 @@ const //переменные страницы
                     console.log('this.moneyDeposit: ', this.moneyDeposit);
                 }
             };
-            depozitPass(val){
-                if (isNumber(val) || val < 0 || val > 100) {
-                    alert('что за банк?');
-                }
-                continue;
-            };
+           
             changePercent(){
                 const valueSelect = this.value;
                
                 if (valueSelect === 'other') {
-                    let val = depositPercent.value;
+                    let val = +depositPercent.value;
                     depositPercent.style.display = 'inline-block'; //процент
-                    depositPercent.addEventListener('change', ()=>{
-                    if(val >100 || val<0 ||val !== isNumber(val)) {
-                        calculateButton.disabled = true;
                     
-                        alert('Введите корректное значение в поле проценты');
-                    }
+                    depositPercent.addEventListener('change', ()=>{
+                        if(val >100 || val<0 ||!isNumber(val)) {
+                            calculateButton.disabled = true;
+                        
+                            alert('Введите корректное значение в поле проценты');
+                        } else {
+                            calculateButton.disabled = false;
+                        }
                     this.persentDeposit = depositPercent.value;
                     });
                 } else {
