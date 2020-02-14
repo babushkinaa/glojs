@@ -372,24 +372,28 @@ const //переменные страницы
                     console.log('this.moneyDeposit: ', this.moneyDeposit);
                 }
             };
-           
+           //Проверка на число в поле процент
+            checkDepositPersent(event){
+                // console.log('что то вводим');
+                let item = event.target.value;
+                if (item > 0 && item < 100 && item.replace(/[\D]/g, '')) {
+                            
+                    // item = item.replace(/[\D]/g, '');
+                    this.persentDeposit = item;
+                    calculateButton.disabled = false;
+                }
+                else {
+                    calculateButton.disabled = true;
+                    alert('l');
+                }
+            }
+           // если значение не банк то отобразим поле с проценто
             changePercent(){
                 const valueSelect = this.value;
                
                 if (valueSelect === 'other') {
-                    let val = +depositPercent.value;
-                    depositPercent.style.display = 'inline-block'; //процент
+                        depositPercent.style.display = 'inline-block'; //процент
                     
-                    depositPercent.addEventListener('change', ()=>{
-                        if(val >100 || val<0 ||!isNumber(val)) {
-                            calculateButton.disabled = true;
-                        
-                            alert('Введите корректное значение в поле проценты');
-                        } else {
-                            calculateButton.disabled = false;
-                        }
-                    this.persentDeposit = depositPercent.value;
-                    });
                 } else {
                     depositPercent.style.display = 'none';
                     depositPercent.value = valueSelect;
@@ -397,6 +401,7 @@ const //переменные страницы
                     console.log('this.value: ', this.value);
                 }
             };
+            //Отслеживаем чек если чек отображаем поля
             depositHandler(){
                 
                 console.dir(depositCheckmark);
@@ -405,7 +410,9 @@ const //переменные страницы
                     depositBank.style.display = 'inline-block';
                     depositAmount.style.display = 'inline-block';
                     this.deposit = true;
-                    depositBank.addEventListener('change',this.changePercent);
+                    depositBank.addEventListener('input',this.changePercent);
+                    depositPercent.addEventListener('input',this.checkDepositPersent);
+
                 } else {
                     console.log('не чек');
                     depositBank.style.display = 'none';
