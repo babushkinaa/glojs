@@ -23,7 +23,7 @@ const //переменные страницы
     cancelButton = document.querySelector('#cancel'),
     btnPlusIncomeAdd = document.getElementsByClassName('income_add')[0], // кнопка дополнительный доход "+"
     btnPlusExpensesAdd = document.getElementsByClassName('expenses_add')[0], // возможные расходы кнопка "+"
-    depositCheckmark = document.querySelector('.deposit-checkmark'), // чек-бокс депозит
+    depositCheckmark = document.querySelector('#deposit-check'), // чек-бокс депозит
     additionalIncome = document.querySelectorAll('.additional_income'), // возможные доходы
 
     //value
@@ -35,6 +35,7 @@ const //переменные страницы
     resultTotalIncomePeriodValue = document.querySelector('.income_period-value'), // накопления за период
     resultTotalTargetMonthValue = document.querySelector('.target_month-value'), // срок достижения
     periodAmount = document.querySelector('.period-amount');
+    depositCalc = document.querySelector('.deposit-calc');
 
     // input
     inputSalaryAmount = document.querySelector('.salary-amount'), // месячный доход
@@ -45,6 +46,9 @@ const //переменные страницы
     inputExpensesAmount = document.querySelectorAll('.expenses-items'), // обязательные расходы сумма
     inputAdditionalExpensesItem = document.querySelector('.additional_expenses-item'), // возможные рассходы
     inputTargetAmount = document.querySelector('.target-amount'), // цель накопления
+    depositBank = document.querySelector('.deposit-bank');
+    depositAmount = document.querySelector('.deposit-amount');
+    depositPercent = document.querySelector('.deposit-percent');
     
     // бегунок
     inputPeriodSelect = document.querySelector('.period-select'); // период рассчета ползунок
@@ -65,7 +69,7 @@ const //переменные страницы
             moneyDeposit = 0,
             expenses = [],
             addExpenses = [],
-            deposit = true,
+            deposit = false,
             mission = 1000000,
             period = 12
         ){ // присваиваем значения свойствам класса при создании класса
@@ -106,8 +110,10 @@ const //переменные страницы
                 this.getExpensesMonth();
                 // appData.getExpensesMonth();
                         // appData.questDeposit();
-                        // appData.getInfoDeposit();
+                this.getInfoDeposit();
+
                 this.getBudget();
+
                 // appData.getBudget();
                 this.getTargetMonth();
                 // appData.getTargetMonth();
@@ -119,6 +125,7 @@ const //переменные страницы
                 // appData.showResults();
             
                 this.inputDisable(); //отключаем инпуты
+            ;
             };
             // присваиваем значение на странице
             showResults(){
@@ -135,7 +142,7 @@ const //переменные страницы
             };
             // Расходы обязательные расходы добавление строчек
             addExpensesBlock(){ 
-                let item = inputExpensesAmount[0].cloneNode(true);
+                const item = inputExpensesAmount[0].cloneNode(true);
                 console.log('item: ', item);
                 let val = item.querySelector('.expenses-title');
                 let val1 = item.querySelector('.expenses-amount');
@@ -233,28 +240,6 @@ const //переменные страницы
                 numPeriod.value = pSelect.value;
                 numPeriod.textContent = pSelect.value;
             };
-             // есть ли депозит в банке deposit
-            questDeposit(){
-                // let quest = prompt('Есть ли у вас счет в банке? "да" "нет"', 'Да').toLocaleLowerCase();
-                // return appData.deposit = quest === 'да' ? true : false;
-                this.deposit = false;
-            };
-            // какой депозит в банке
-            getInfoDeposit(){
-                if (this.deposit) {
-                    let persentDeposit;
-                    do {
-                        persentDeposit = prompt('какой процент', 10);
-                    } while (!isNumber(persentDeposit));
-                    this.persentDeposit = +persentDeposit;
-            
-                    let moneyDeposit;
-                    do {
-                        moneyDeposit = prompt('Какая сумма?', 10000);
-                    } while (!isNumber(moneyDeposit));
-                    this.moneyDeposit = +moneyDeposit;
-                }
-            };
             // сколько накопим 
             calcSavedMoney(){
                 //    return appData.budgetMonth * inputPeriodSelect.value;
@@ -267,7 +252,11 @@ const //переменные страницы
             getBudget() { 
                 let budgetMonth =  this.budget - this.expensesMonth;
                 let budgetDay = Math.floor(budgetMonth/30);
-                return this.budgetMonth = budgetMonth, this.budgetDay = budgetDay;
+                const monthDeposit = this.moneyDeposit * (this.persentDeposit / 100); 
+                // const monthDeposit = this.moneyDeposit * (this.persentDeposit / 100); 
+                this.budgetMonth = budgetMonth + monthDeposit;
+                this.budgetDay = budgetDay;
+                // this.budget +=monthDeposit;
             };
             // за какое время будет достигнута цель
             getTargetMonth() {
@@ -367,11 +356,73 @@ const //переменные страницы
                     cancelButton.style.display = 'block';
                 
             };
+            // есть ли депозит в банке deposit
+            questDeposit(){
+                // let quest = prompt('Есть ли у вас счет в банке? "да" "нет"', 'Да').toLocaleLowerCase();
+                // return appData.deposit = quest === 'да' ? true : false;
+                this.deposit = false;
+            };
+            // какой депозит в банке
+            getInfoDeposit(){
+                if (this.deposit) {
+                    this.persentDeposit = depositPercent.value;
+                    console.log('depositPercent.value;: ', depositPercent.value);
+                    console.log('this.persentDeposit: ', this.persentDeposit);
+                    this.moneyDeposit = depositAmount.value;
+                    console.log('this.moneyDeposit: ', this.moneyDeposit);
+                }
+            };
+            depozitPass(val){
+                if (isNumber(val) || val < 0 || val > 100) {
+                    alert('что за банк?');
+                }
+                continue;
+            };
+            changePercent(){
+                const valueSelect = this.value;
+               
+                if (valueSelect === 'other') {
+                    let val = depositPercent.value;
+                    depositPercent.style.display = 'inline-block'; //процент
+                    depositPercent.addEventListener('change', ()=>{
+                    if(val >100 || val<0 ||val !== isNumber(val)) {
+                        calculateButton.disabled = true;
+                    
+                        alert('Введите корректное значение в поле проценты');
+                    }
+                    this.persentDeposit = depositPercent.value;
+                    });
+                } else {
+                    depositPercent.style.display = 'none';
+                    depositPercent.value = valueSelect;
+                    console.log('this.persentDeposit: ', this.persentDeposit);
+                    console.log('this.value: ', this.value);
+                }
+            };
+            depositHandler(){
+                
+                console.dir(depositCheckmark);
+                if (depositCheckmark.checked) {
+                    
+                    depositBank.style.display = 'inline-block';
+                    depositAmount.style.display = 'inline-block';
+                    this.deposit = true;
+                    depositBank.addEventListener('change',this.changePercent);
+                } else {
+                    console.log('не чек');
+                    depositBank.style.display = 'none';
+                    depositBank.value = '';
+                    depositAmount.style.display = 'none';
+                    depositAmount.value = '';
+                    this.deposit = false;
+                    depositBank.removeEventListener('change',this.changePercent);
+                }
+            };
             // добавляем обработчики событий
             eventsListeners(){
                 periodAmount.addEventListener('change',appData.showResults);
                 // periodAmount.addEventListener('change',appData.showResults.bind(appData));
-                inputSalaryAmount.addEventListener('input', appData.enableBtn);
+                inputSalaryAmount.addEventListener('input', this.enableBtn.bind(appData));
                 // inputSalaryAmount.addEventListener('input', appData.enableBtn.bind(appData));
                 inputPeriodSelect.addEventListener('input',appData.setValuePeriod);
                 // inputPeriodSelect.addEventListener('input',appData.setValuePeriod.bind(appData));
@@ -380,6 +431,7 @@ const //переменные страницы
                 // btnPlusExpensesAdd.addEventListener('click',appData.addExpensesBlock.bind(appData));
                 btnPlusExpensesAdd.addEventListener('click',appData.addExpensesBlock);
                 btnPlusIncomeAdd.addEventListener('click',appData.addIncomeBlock);
+                depositCheckmark.addEventListener('change',this.depositHandler.bind(appData));
                 // собятия на ввод - пока так
                 inputExpensesAmount[0].querySelector('.expenses-title').addEventListener('keypress',appData.checkSymbol);
                 inputExpensesAmount[0].querySelector('.expenses-amount').addEventListener('keypress',appData.checkSymbol);
